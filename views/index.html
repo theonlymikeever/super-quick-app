@@ -18,7 +18,7 @@
 
 <script type="text/javascript">
 $('#save').on('click', function() {
-  $.post('/', { name: 'test' })
+  $.post('/', { name: $('#add-box').val() })
     .then(() => {
       $.get('/')
         .then((things) => {
