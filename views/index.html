@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quick App!</title>
+  <script src="jquery/jquery.min.js"></script>
+</head>
+<body>
+<form>
+  <input id="add-box" type="text" name="add">
+  <button id="save">Save</button>
+</form>
+<ul id="things">
+  {% for thing in things %}
+  <li>{{ thing.name }}</li>
+  {% endfor %}
+</ul>
+</body>
+
+<script type="text/javascript">
+$('#save').on('click', function() {
+  $.post('/', { name: 'test' })
+    .then(() => {
+      $.get('/')
+        .then((things) => {
+          var temp = ''
+          temp = `
+            ${things.reduce(function(block) {
+            block += `<li> ${things.name}</li>`
+            return block;
+          }, '')}
+          `;
+          var container = $('#things');
+          container.empty();
+          var $html = $(temp);
+          container.html($html);
+        })
+    })
+})
+</script>
+</html>
