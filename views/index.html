@@ -17,24 +17,35 @@
 </body>
 
 <script type="text/javascript">
+//first render
+$.get('/things')
+  .then((things) => {
+    render(things)
+  })
+//save
 $('#save').on('click', function() {
   $.post('/', { name: $('#add-box').val() })
     .then(() => {
-      $.get('/')
+      $.get('/things')
         .then((things) => {
-          var temp = ''
-          temp = `
-            ${things.reduce(function(block) {
-            block += `<li> ${things.name}</li>`
-            return block;
-          }, '')}
-          `;
-          var container = $('#things');
-          container.empty();
-          var $html = $(temp);
-          container.html($html);
-        })
+              console.log(things)
+          render(things)
     })
+  })
 })
+//render
+function render(things) {
+  var temp = ''
+  temp = `
+    ${things.reduce(function(block, thing) {
+    block += `<li> ${thing.name}</li>`
+    return block;
+  }, '')}
+  `;
+  var container = $('#things');
+  container.empty();
+  var $html = $(temp);
+  container.html($html);
+}
 </script>
 </html>

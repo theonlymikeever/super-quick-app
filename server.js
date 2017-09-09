@@ -41,13 +41,17 @@ db.sync({ force: true })
     })
   })
 
-
 app.get('/', (req, res, next) => {
+    res.render('index');
+})
+
+app.get('/things', (req, res, next) => {
   Thing.findAll()
   .then((things) => {
-    res.render('index', {things});
+    res.send(things);
   })
 })
+
 
 app.post('/', (req, res, next) => {
   const input = req.body;
